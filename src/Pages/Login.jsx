@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../Supabase";
 import { Link } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -10,7 +9,39 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
-        navigate("/dashboard");
+        e.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Error en el inicio de sesión');
+            }
+
+            Swal.fire({
+                title: 'Inicio de sesión exitoso',
+                text: 'Bienvenido/a, ' + data.user.full_name,
+                icon: 'success',
+            });
+
+            // Redirigir al dashboard
+            navigate('/dashboard');
+        } catch (error) {
+            setErrorMessage(error.message);
+            Swal.fire({
+                title: 'Error',
+                text: error.message,
+                icon: 'error',
+            });
+        }
     };
 
     return (
