@@ -67,6 +67,17 @@ function Navbar() {
                     >
                         Añadir Temas de Interes
                     </NavLink>
+                    <NavLink
+                        to="/blacklist"
+                        onClick={closeMenu}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
+                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
+                        }
+                    >
+                        Lista de usuarios
+                    </NavLink>
                 </nav>
 
                 {/* Enlace para salir - Alineado a la derecha */}
