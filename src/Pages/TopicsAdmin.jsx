@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavbarAdmin from '../Components/NavBarAdmin';
+import Navbar from '../Components/NavBar';
 
 function TopicsAdmin() {
     const [temas, setTemas] = useState([
@@ -42,7 +42,7 @@ function TopicsAdmin() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-blue-600 flex flex-col">
-            <NavbarAdmin/>
+            <Navbar/>
 
             <main className="flex-1 w-full flex flex-col items-center text-white px-6 py-12">
                 <h2 className="text-4xl font-bold text-gray-200 mb-12">Añadir Temas de Interés</h2>

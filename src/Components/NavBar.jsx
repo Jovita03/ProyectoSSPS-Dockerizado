@@ -56,7 +56,6 @@ function Navbar() {
                     >
                         Foro
                     </NavLink>
-                    {/* Opción para el administrador */}
                     <NavLink
                         to="/topicsadmin"
                         onClick={closeMenu}
@@ -66,7 +65,7 @@ function Navbar() {
                                 : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
                         }
                     >
-                        Administrador
+                        Añadir Temas de Interes
                     </NavLink>
                 </nav>
 
@@ -116,7 +115,15 @@ function Navbar() {
                         onClick={closeMenu}
                         className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
                     >
-                        Administrador
+                        Añadir Temas
+                    </NavLink>
+                    <NavLink
+                        to="/foroadmin"
+                        onClick={closeMenu}
+                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
+                    >
+                        ForoAdmin
+                    
                     </NavLink>
                     {/* Enlace para salir en el menú móvil - solo aparece aquí */}
                     <NavLink
