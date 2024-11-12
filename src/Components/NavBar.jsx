@@ -65,7 +65,7 @@ function Navbar() {
                                 : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
                         }
                     >
-                        Añadir Temas de Interes
+                        Añadir Temas de interes
                     </NavLink>
                     <NavLink
                         to="/blacklist"
@@ -77,6 +77,17 @@ function Navbar() {
                         }
                     >
                         Lista de usuarios
+                    </NavLink>
+                    <NavLink
+                        to="/quizadmin"
+                        onClick={closeMenu}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
+                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
+                        }
+                    >
+                        Actualizacion de quiz
                     </NavLink>
                 </nav>
 
@@ -126,14 +137,22 @@ function Navbar() {
                         onClick={closeMenu}
                         className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
                     >
-                        Añadir Temas
+                        Añadir Temas de interes
                     </NavLink>
                     <NavLink
-                        to="/foroadmin"
-                        onClick={closeMenu}
-                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
-                    >
-                        ForoAdmin
+                        to="/blacklist"
+                       className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
+                    > onClick={closeMenu}
+                        
+                        Lista de usuarios
+                    
+                    </NavLink>
+                    <NavLink
+                        to="/quizadmin"
+                       className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
+                    > onClick={closeMenu}
+                        
+                        Actualizacion de quiz
                     
                     </NavLink>
                     {/* Enlace para salir en el menú móvil - solo aparece aquí */}
