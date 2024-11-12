@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa"; // Importamos el ícono de "Salir"
 
-function Navbar() {
+function NavbarAdmin() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -24,40 +24,6 @@ function Navbar() {
                 {/* Navegación para pantallas grandes */}
                 <nav className="hidden lg:flex space-x-8 flex-grow">
                     <NavLink
-                        to="/quiz"
-                        onClick={closeMenu}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
-                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
-                        }
-                    >
-                        Cuestionarios
-                    </NavLink>
-                    <NavLink
-                        to="/topics"
-                        onClick={closeMenu}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
-                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
-                        }
-                    >
-                        Temas de interés
-                    </NavLink>
-                    <NavLink
-                        to="/dashboard"
-                        onClick={closeMenu}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
-                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
-                        }
-                    >
-                        Foro
-                    </NavLink>
-                    {/* Opción para el administrador */}
-                    <NavLink
                         to="/topicsadmin"
                         onClick={closeMenu}
                         className={({ isActive }) =>
@@ -66,7 +32,7 @@ function Navbar() {
                                 : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
                         }
                     >
-                        Administrador
+                        Temas de interes
                     </NavLink>
                 </nav>
 
@@ -94,29 +60,8 @@ function Navbar() {
                         onClick={closeMenu}
                         className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
                     >
-                        Cuestionarios
-                    </NavLink>
-                    <NavLink
-                        to="/topics"
-                        onClick={closeMenu}
-                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
-                    >
-                        Temas de interés
-                    </NavLink>
-                    <NavLink
-                        to="/dashboard"
-                        onClick={closeMenu}
-                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
-                    >
-                        Foro
-                    </NavLink>
-                    {/* Nueva opción para el administrador en el menú móvil */}
-                    <NavLink
-                        to="/topicsadmin"
-                        onClick={closeMenu}
-                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
-                    >
-                        Administrador
+                        Temas de interes
+                    
                     </NavLink>
                     {/* Enlace para salir en el menú móvil - solo aparece aquí */}
                     <NavLink
@@ -132,4 +77,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default NavbarAdmin;
