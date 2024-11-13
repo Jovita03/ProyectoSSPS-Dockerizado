@@ -16,7 +16,9 @@ function Register() {
 
         try {
             // Verificar si el correo ya existe
-            const response = await fetch(`http://localhost:5000/users?email=${email}`);
+            console.log(email);
+            
+            const response = await fetch(`http://localhost:5000/users/${email}`);
 
             if (!response.ok) {
                 if (response.status === 404) {
@@ -41,7 +43,7 @@ function Register() {
                 }
             }
 
-            const registerResponse = await fetch('http://localhost:5000/users', {
+            const registerResponse = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,6 +71,7 @@ function Register() {
             });
         }
     };
+
 
     return (
         <div className="w-full h-screen bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center">
