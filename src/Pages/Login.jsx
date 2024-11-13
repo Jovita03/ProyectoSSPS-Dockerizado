@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,14 +26,13 @@ function Login() {
             if (!response.ok) {
                 throw new Error(data.message || 'Error en el inicio de sesión');
             }
+            localStorage.setItem('full_name', data.user.full_name)
 
             Swal.fire({
                 title: 'Inicio de sesión exitoso',
                 text: 'Bienvenido/a, ' + data.user.full_name,
                 icon: 'success',
             });
-
-            // Redirigir al dashboard
             navigate('/dashboard');
         } catch (error) {
             setErrorMessage(error.message);

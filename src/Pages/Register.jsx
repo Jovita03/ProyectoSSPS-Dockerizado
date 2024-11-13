@@ -12,10 +12,9 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage(""); // Resetear mensaje de error al inicio
+        setErrorMessage("");    
 
         try {
-            // Verificar si el correo ya existe
             const response = await fetch(`http://localhost:5000/users?email=${email}`);
 
             if (!response.ok) {
@@ -41,7 +40,7 @@ function Register() {
                 }
             }
 
-            const registerResponse = await fetch('http://localhost:5000/users', {
+            const registerResponse = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +58,7 @@ function Register() {
             });
 
             // Redirigir al usuario al dashboard
-            navigate("/dashboard");
+            navigate("/");
         } catch (error) {
             setErrorMessage(error.message); // Mostrar error en caso de fallo
             Swal.fire({
