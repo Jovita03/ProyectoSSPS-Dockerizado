@@ -1,22 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa"; // Importamos el ícono de "Salir"
+import { FaSignOutAlt } from "react-icons/fa"; 
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const navigate = useNavigate(); 
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => setMenuOpen(false);
+
+    useEffect(() => {
+        const fetchProtected = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/protected', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                const data = await response.json();
+    
+                console.log(data);
+    
+                if (!response.ok) {
+                    navigate('/');
+                } else {
+                    setIsAdmin(data.isAdmin)
+                }
+            } catch (error) {
+                console.error("Error al hacer la solicitud protegida:", error);
+                navigate('/');
+            }
+        };
+    
+        fetchProtected();
+    }, [navigate]);
+    
 
     const handleLogout = async () => {
         try {
             await fetch('http://localhost:5000/logout', {
                 method: 'GET',
-                credentials: 'include', // Importante para enviar la cookie
+                credentials: 'include',
             });
-            navigate('/'); // Redirige al login tras hacer logout
+            navigate('/');
         } catch (error) {
             console.error('Error al hacer logout:', error);
         }
@@ -70,6 +97,8 @@ function Navbar() {
                     >
                         Foro
                     </NavLink>
+                    {isAdmin? 
+                    <>
                     <NavLink
                         to="/topicsadmin"
                         onClick={closeMenu}
@@ -103,6 +132,11 @@ function Navbar() {
                     >
                         Actualizacion de quiz
                     </NavLink>
+                    </>
+                    :
+                    null}
+
+                    
                 </nav>
 
                 {/* Enlace para salir - Alineado a la derecha */}
@@ -146,6 +180,7 @@ function Navbar() {
                         Foro
                     </NavLink>
                     {/* Nueva opción para el administrador en el menú móvil */}
+                    {isAdmin? <>
                     <NavLink
                         to="/topicsadmin"
                         onClick={closeMenu}
@@ -171,6 +206,8 @@ function Navbar() {
                         Actualizacion de quiz
                     
                     </NavLink>
+                    </> : null}
+                    
                     {/* Enlace para salir en el menú móvil - solo aparece aquí */}
                     <NavLink
                         to="/"
