@@ -15,6 +15,7 @@ function Register() {
         setErrorMessage("");    
 
         try {
+            // Verificar si el correo ya existe
             const response = await fetch(`http://localhost:5000/users?email=${email}`);
 
             if (!response.ok) {
@@ -68,6 +69,7 @@ function Register() {
             });
         }
     };
+
 
     return (
         <div className="w-full h-screen bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center">
@@ -142,7 +144,7 @@ function Register() {
 
                 <p className="mt-6 text-center">
                     ¿Ya tienes una cuenta?{' '}
-                    <Link to="/login" className="text-blue-600 hover:underline">
+                    <Link to="/" className="text-blue-600 hover:underline">
                         Inicia sesión
                     </Link>
                 </p>

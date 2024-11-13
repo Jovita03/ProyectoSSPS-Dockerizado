@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa"; // Importamos el ícono de "Salir"
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+    const navigate = useNavigate(); 
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => setMenuOpen(false);
+
+    const handleLogout = async () => {
+        try {
+            await fetch('http://localhost:5000/logout', {
+                method: 'GET',
+                credentials: 'include', // Importante para enviar la cookie
+            });
+            navigate('/'); // Redirige al login tras hacer logout
+        } catch (error) {
+            console.error('Error al hacer logout:', error);
+        }
+    };
 
     return (
         <header className="w-full py-4 bg-white shadow-lg z-20 rounded-b-lg">
@@ -65,7 +79,29 @@ function Navbar() {
                                 : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
                         }
                     >
-                        Añadir Temas de Interes
+                        Añadir Temas de interes
+                    </NavLink>
+                    <NavLink
+                        to="/blacklist"
+                        onClick={closeMenu}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
+                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
+                        }
+                    >
+                        Lista de usuarios
+                    </NavLink>
+                    <NavLink
+                        to="/quizadmin"
+                        onClick={closeMenu}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
+                                : "text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300"
+                        }
+                    >
+                        Actualizacion de quiz
                     </NavLink>
                 </nav>
 
@@ -73,7 +109,7 @@ function Navbar() {
                 <div className="ml-auto hidden lg:block">
                     <NavLink
                         to="/"
-                        onClick={closeMenu}
+                        onClick={handleLogout}
                         className={({ isActive }) =>
                             isActive
                                 ? "text-lg font-semibold text-blue-600 border-b-2 border-blue-600 pb-2"
@@ -115,20 +151,30 @@ function Navbar() {
                         onClick={closeMenu}
                         className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
                     >
-                        Añadir Temas
+                        Añadir Temas de interes
                     </NavLink>
                     <NavLink
-                        to="/foroadmin"
                         onClick={closeMenu}
-                        className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
-                    >
-                        ForoAdmin
+                        to="/blacklist"
+                       className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
+                    > 
+                        
+                        Lista de usuarios
+                    
+                    </NavLink>
+                    <NavLink
+                        to="/quizadmin"
+                       className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
+                       onClick={closeMenu}
+                    > 
+                        
+                        Actualizacion de quiz
                     
                     </NavLink>
                     {/* Enlace para salir en el menú móvil - solo aparece aquí */}
                     <NavLink
                         to="/"
-                        onClick={closeMenu}
+                        onClick={handleLogout}
                         className="block text-lg font-semibold text-gray-800 hover:text-blue-600"
                     >
                         <FaSignOutAlt className="inline-block mr-2" /> Salir

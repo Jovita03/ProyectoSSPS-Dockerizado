@@ -4,7 +4,10 @@ import Register from './Pages/Register';
 import Topics from './Pages/Topics'
 import QuizSelector from './Pages/QuizSelector'
 import TopicsAdmin from './Pages/TopicsAdmin'
+import Blacklist from './Pages/Blacklist';
+import QuizAdmin from './Pages/QuizAdmin';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 function App() {
 
   return (
@@ -16,6 +19,8 @@ function App() {
           <Route path='/topics' element={<Topics/>} />
           <Route path='/quiz' element={<QuizSelector/>} />
           <Route path='/topicsadmin' element={<TopicsAdmin/>} />
+          <Route path='/blacklist' element={<Blacklist/>} />
+          <Route path='/quizadmin' element={<QuizAdmin/>}/>
         </Routes>
       </BrowserRouter>
   )
