@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaRegComment, FaPlus } from 'react-icons/fa';
 
-function Foro() {
+function Foro({admin}) {
     // Estado para manejar las publicaciones y comentarios
     const [posts, setPosts] = useState([
         {
@@ -91,6 +91,9 @@ function Foro() {
                 <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                     {post.title} <span className="text-sm text-gray-500">por {post.author}</span>
                 </h3>
+                {admin? <button className='bg-black w-auto'>
+                Borrar
+                </button> : null}
                 <p className="text-lg text-gray-700 mb-6">{post.content}</p>
 
                 {/* Comentarios */}

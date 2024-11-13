@@ -1,8 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "../Components/NavBar";
 import Foro from "../Components/Foro"; // Asegúrate de importar el componente del foro
 
 function Dashboard() {
+
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(() => {
+        const fetchProtected = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/protected', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                const data = await response.json();
+    
+                console.log(data);
+    
+                if (!response.ok) {
+                    navigate('/');
+                } else {
+                    setIsAdmin(data.isAdmin)
+                }
+            } catch (error) {
+                console.error("Error al hacer la solicitud protegida:", error);
+                navigate('/');
+            }
+        };
+    
+        fetchProtected();
+    }, []);
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-blue-600 flex flex-col">
             {/* Navbar */}
@@ -15,7 +43,7 @@ function Dashboard() {
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 text-center mb-4 md:mb-6 lg:mb-8">
                         Foro de Discusión
                     </h2>
-                    <Foro /> {/* Componente del foro */}
+                    <Foro  admin={isAdmin}/> {/* Componente del foro */}
                 </section>
             </main>
         </div>
