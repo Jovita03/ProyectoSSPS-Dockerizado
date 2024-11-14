@@ -9,8 +9,16 @@ function QuizAdmin() {
             titulo: "Introducción a la Ciberseguridad",
             descripcion: "Conceptos básicos sobre ciberseguridad.",
             preguntas: [
-                { texto: "¿Qué es la ciberseguridad?", opciones: ["Protección de sistemas", "Técnica de ataque", "Ambos", "Ninguno"] },
-                { texto: "¿Cuál es una amenaza común en la red?", opciones: ["Virus", "Rayo láser", "Ola gigante", "Apagón eléctrico"] }
+                {
+                    texto: "¿Qué es la ciberseguridad?",
+                    opciones: ["Protección de sistemas", "Técnica de ataque", "Ambos", "Ninguno"],
+                    respuestaCorrecta: 0
+                },
+                {
+                    texto: "¿Cuál es una amenaza común en la red?",
+                    opciones: ["Virus", "Rayo láser", "Ola gigante", "Apagón eléctrico"],
+                    respuestaCorrecta: 0
+                }
             ]
         },
         {
@@ -18,8 +26,16 @@ function QuizAdmin() {
             titulo: "Amenazas en la Red",
             descripcion: "Tipos comunes de amenazas en línea.",
             preguntas: [
-                { texto: "¿Qué es el phishing?", opciones: ["Pescar en línea", "Suplantación de identidad", "Ataque físico", "Ninguno"] },
-                { texto: "¿Qué es un ransomware?", opciones: ["Un tipo de virus", "Un troyano", "Un malware que cifra datos", "Ninguno"] }
+                {
+                    texto: "¿Qué es el phishing?",
+                    opciones: ["Pescar en línea", "Suplantación de identidad", "Ataque físico", "Ninguno"],
+                    respuestaCorrecta: 1
+                },
+                {
+                    texto: "¿Qué es un ransomware?",
+                    opciones: ["Un tipo de virus", "Un troyano", "Un malware que cifra datos", "Ninguno"],
+                    respuestaCorrecta: 2
+                }
             ]
         }
     ]);
@@ -51,13 +67,19 @@ function QuizAdmin() {
     const agregarPregunta = () => {
         setNuevoCuestionario({
             ...nuevoCuestionario,
-            preguntas: [...nuevoCuestionario.preguntas, { texto: "", opciones: ["", "", "", ""] }]
+            preguntas: [...nuevoCuestionario.preguntas, { texto: "", opciones: ["", "", "", ""], respuestaCorrecta: null }]
         });
     };
 
     const handleOpcionChange = (preguntaIndex, opcionIndex, e) => {
         const preguntas = [...nuevoCuestionario.preguntas];
         preguntas[preguntaIndex].opciones[opcionIndex] = e.target.value;
+        setNuevoCuestionario({ ...nuevoCuestionario, preguntas });
+    };
+
+    const handleRespuestaCorrectaChange = (preguntaIndex, opcionIndex) => {
+        const preguntas = [...nuevoCuestionario.preguntas];
+        preguntas[preguntaIndex].respuestaCorrecta = opcionIndex;
         setNuevoCuestionario({ ...nuevoCuestionario, preguntas });
     };
 
@@ -126,14 +148,22 @@ function QuizAdmin() {
                             />
                             <div className="grid grid-cols-2 gap-4">
                                 {pregunta.opciones.map((opcion, opcionIndex) => (
-                                    <input
-                                        key={opcionIndex}
-                                        type="text"
-                                        placeholder={`Opción ${opcionIndex + 1}`}
-                                        value={opcion}
-                                        onChange={(e) => handleOpcionChange(preguntaIndex, opcionIndex, e)}
-                                        className="p-3 rounded-lg border border-gray-300 text-gray-900"
-                                    />
+                                    <div key={opcionIndex} className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name={`respuestaCorrecta-${preguntaIndex}`}
+                                            checked={pregunta.respuestaCorrecta === opcionIndex}
+                                            onChange={() => handleRespuestaCorrectaChange(preguntaIndex, opcionIndex)}
+                                            className="mr-2"
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder={`Opción ${opcionIndex + 1}`}
+                                            value={opcion}
+                                            onChange={(e) => handleOpcionChange(preguntaIndex, opcionIndex, e)}
+                                            className="p-3 rounded-lg border border-gray-300 text-gray-900"
+                                        />
+                                    </div>
                                 ))}
                             </div>
                         </div>
