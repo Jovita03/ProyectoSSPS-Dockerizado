@@ -13,11 +13,11 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage("");    
-
+    
         try {
             // Verificar si el correo ya existe
-            const response = await fetch(`http://localhost:5000/users?email=${email}`);
-
+            const response = await fetch(`http://localhost:5000/users/${email}`);
+    
             if (!response.ok) {
                 if (response.status === 404) {
                     Swal.fire({
@@ -30,7 +30,7 @@ function Register() {
                 }
             } else {
                 const data = await response.json();
-
+    
                 if (data) {
                     Swal.fire({
                         title: 'Correo existente',
@@ -40,7 +40,7 @@ function Register() {
                     return;
                 }
             }
-
+    
             const registerResponse = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
@@ -57,7 +57,7 @@ function Register() {
                 text: 'Tu cuenta ha sido creada correctamente.',
                 icon: 'success'
             });
-
+    
             // Redirigir al usuario al dashboard
             navigate("/");
         } catch (error) {
@@ -69,6 +69,7 @@ function Register() {
             });
         }
     };
+    
 
 
     return (
