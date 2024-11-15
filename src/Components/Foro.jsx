@@ -30,14 +30,38 @@ function Foro({admin}) {
 
     // Función para crear una nueva publicación
     const handleCreatePost = () => {
-        if (!newPostTitle || !newPostContent) return;
-        const newPost = {
-            title: newPostTitle,
-            content: newPostContent,
-            author: "Nuevo Autor",
-            comments: [],
+        const fullName = localStorage.getItem('full_name'); // Cambiado a fullName para coincidir con el backend
+    
+        const postPublication = async () => {
+            try {
+                const body = JSON.stringify({
+                    newPostTitle,
+                    newPostContent,
+                    fullName, // Usamos el mismo nombre que en el backend
+                });
+    
+                const response = await fetch('http://localhost:5000/postPublication', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                });
+    
+                const result = await response.json();
+    
+                if (!response.ok) {
+                    console.error('Error al registrar la publicación:', result.message);
+                    
+                    return;
+                }
+            } catch (error) {
+                console.error('Error interno:', error);
+                alert('Ocurrió un error interno. Inténtalo de nuevo más tarde.');
+            }
         };
-        setPosts([newPost, ...posts]);
+    
+        postPublication();
         setNewPostTitle('');
         setNewPostContent('');
     };
@@ -86,8 +110,8 @@ function Foro({admin}) {
                 {posts.length === 0 ? (
                     <p className="text-gray-200">No hay publicaciones aún.</p>
                 ) : (
-                    posts.map((post, index) => (  
-                        <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                    posts.map((post) => (  
+                        <div key={post.id} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
                             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                                 {post.title} <span className="text-sm text-gray-500">por {post.user}</span>
                             </h3>
