@@ -61,7 +61,7 @@ function Register() {
             // Redirigir al usuario al dashboard
             navigate("/");
         } catch (error) {
-            setErrorMessage(error.message); // Mostrar error en caso de fallo
+            setErrorMessage(error.message); // Mostrar error en caso de fallo  dd
             Swal.fire({
                 title: 'Error',
                 text: error.message,
