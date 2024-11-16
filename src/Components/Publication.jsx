@@ -9,6 +9,21 @@ function Publication({ admin, posts, fetchPosts  }) {
 
     // Función para eliminar una publicación
     const handleDelete = async (postId) => {
+
+        try{
+            const responseDeleteComments = await fetch('http://localhost:5000/deleteComments',{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: postId }),
+            })
+            if (!responseDeleteComments.ok) {
+                console.error('Error al eliminar los comentarios');
+                return;
+            }
+        }catch{
+            console.error('Error interno:', error);
+        }
+
         try {
             const response = await fetch('http://localhost:5000/deletePublication', {
                 method: 'POST',
