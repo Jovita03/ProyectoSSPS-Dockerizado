@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import { FaRegComment, FaPlus } from 'react-icons/fa';
 
 function Foro({admin}) {
     const [newPostTitle, setNewPostTitle] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
+    const location = useLocation()
     const [newComment, setNewComment] = useState('');
     const [posts, setPosts] = useState([]);  // Inicializamos el estado con un arreglo vacío
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/publication');
-                const data = await response.json();
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/publication');
+            const data = await response.json();
 
-                console.log("Publicaciones recibidas:", data);
+            console.log("Publicaciones recibidas:", data);
 
-                if (Array.isArray(data)) {
-                    setPosts(data);
-                } else {
-                    console.error('No se recibieron publicaciones válidas');
-                }
-            } catch (error) {
-                console.error('Error al obtener publicaciones:', error);
+            if (Array.isArray(data)) {
+                setPosts(data);
+            } else {
+                console.error('No se recibieron publicaciones válidas');
             }
-        };
+        } catch (error) {
+            console.error('Error al obtener publicaciones:', error);
+        }
+    };
 
+    useEffect(() => {
         fetchPosts();
-    }, []); 
+    },[location.state]); 
 
     // Función para crear una nueva publicación
     const handleCreatePost = () => {
@@ -57,16 +59,40 @@ function Foro({admin}) {
                 }
             } catch (error) {
                 console.error('Error interno:', error);
-                alert('Ocurrió un error interno. Inténtalo de nuevo más tarde.');
             }
+            fetchPosts()
         };
-    
+        
         postPublication();
         setNewPostTitle('');
         setNewPostContent('');
     };
 
-    // Función para agregar un comentario a una publicación
+    const handleDelete = async (data) => {
+        const id = data.id
+
+        try {
+            const body = JSON.stringify({
+                id
+            })
+
+            const response = await fetch('http://localhost:5000/deletePublication',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: body
+            })
+            if (!response.ok) {
+                console.error('Error al eliminar la publicación');
+            }
+        } catch (error) {
+            console.error('Error interno:', error);
+        }
+        
+        fetchPosts()
+    }
+
     const handleAddComment = (index) => {
         if (!newComment) return;
         const updatedPosts = [...posts];
@@ -115,8 +141,10 @@ function Foro({admin}) {
                             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                                 {post.title} <span className="text-sm text-gray-500">por {post.user}</span>
                             </h3>
-                            {admin? <button className='bg-black w-20 h-auto p-1'>
-                                borrar
+                            {admin? <button className='bg-black w-20 h-auto p-1' onClick={()=>{
+                                handleDelete(post)
+                            }}>
+                                Eliminar
                             </button>: null}
                             
                             <p className="text-lg text-gray-700 mb-6">
