@@ -1,43 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/NavBar";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
+import Swal from 'sweetalert2';
+
 function QuizAdmin() {
     const [cuestionarios, setCuestionarios] = useState([
-        {
-            id: 1,
-            titulo: "Introducción a la Ciberseguridad",
-            descripcion: "Conceptos básicos sobre ciberseguridad.",
-            preguntas: [
-                {
-                    texto: "¿Qué es la ciberseguridad?",
-                    opciones: ["Protección de sistemas", "Técnica de ataque", "Ambos", "Ninguno"],
-                    respuestaCorrecta: 0
-                },
-                {
-                    texto: "¿Cuál es una amenaza común en la red?",
-                    opciones: ["Virus", "Rayo láser", "Ola gigante", "Apagón eléctrico"],
-                    respuestaCorrecta: 0
-                }
-            ]
-        },
-        {
-            id: 2,
-            titulo: "Amenazas en la Red",
-            descripcion: "Tipos comunes de amenazas en línea.",
-            preguntas: [
-                {
-                    texto: "¿Qué es el phishing?",
-                    opciones: ["Pescar en línea", "Suplantación de identidad", "Ataque físico", "Ninguno"],
-                    respuestaCorrecta: 1
-                },
-                {
-                    texto: "¿Qué es un ransomware?",
-                    opciones: ["Un tipo de virus", "Un troyano", "Un malware que cifra datos", "Ninguno"],
-                    respuestaCorrecta: 2
-                }
-            ]
-        }
+       
     ]);
 
     const [nuevoCuestionario, setNuevoCuestionario] = useState({
@@ -83,7 +52,29 @@ function QuizAdmin() {
         setNuevoCuestionario({ ...nuevoCuestionario, preguntas });
     };
 
-    const agregarCuestionario = () => {
+    useEffect(() => {
+        const fetchQuizzes = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/getQuizzes');
+                if (!response.ok) {
+                    throw new Error("Failed to fetch quizzes");
+                }
+                const quizzes = await response.json();
+                setCuestionarios(quizzes);
+            } catch (err) {
+                console.error("Error fetching quizzes:", err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to fetch quizzes'
+                });
+            }
+        };
+    
+        fetchQuizzes();
+    }, []);
+
+    const agregarCuestionario = async () => {
         if (editando) {
             setCuestionarios(
                 cuestionarios.map((quiz) =>
@@ -94,6 +85,26 @@ function QuizAdmin() {
             setCuestionarioEnEdicion(null);
         } else {
             setCuestionarios([...cuestionarios, { ...nuevoCuestionario, id: Date.now() }]);
+
+            console.log(cuestionarios);
+            console.log(nuevoCuestionario);
+
+            const response = await fetch('http://localhost:5000/createQuiz',{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevoCuestionario), 
+
+            });
+
+            if(response.ok){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cuestionario agregado con éxito'
+                });
+
+            }
+            
+            
         }
         setNuevoCuestionario({ titulo: "", descripcion: "", preguntas: [] });
     };
@@ -104,8 +115,25 @@ function QuizAdmin() {
         setCuestionarioEnEdicion(cuestionario);
     };
 
-    const eliminarCuestionario = (id) => {
-        setCuestionarios(cuestionarios.filter((quiz) => quiz.id !== id));
+    const eliminarCuestionario = async (id) => {
+        console.log(id);
+        
+        
+            try {
+                const response = await fetch(`http://localhost:5000/deleteQuiz/${id}`, {
+                    method: "DELETE",
+                });
+        
+                if (response.ok) {
+                    console.log("Cuestionario eliminado con éxito!");
+                    
+                    setCuestionarios((prev) => prev.filter((cuestionario) => cuestionario.id !== id));
+                } else {
+                    console.error("No se pudo eliminar el cuestionario");
+                }
+            } catch (error) {
+                console.error("Error al eliminar el cuestionario:", error);
+            }
     };
 
     return (
@@ -193,12 +221,7 @@ function QuizAdmin() {
                                 {cuestionario.titulo}
                             </h3>
                             <p className="text-md text-gray-600 mb-4">{cuestionario.descripcion}</p>
-                            <button
-                                onClick={() => editarCuestionario(cuestionario)}
-                                className="text-indigo-700 mr-4"
-                            >
-                                <FaEdit /> Editar
-                            </button>
+                            
                             <button
                                 onClick={() => eliminarCuestionario(cuestionario.id)}
                                 className="text-red-600"
