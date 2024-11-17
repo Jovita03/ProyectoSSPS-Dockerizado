@@ -15,7 +15,7 @@ function Dashboard() {
                 });
                 const data = await response.json();
     
-                console.log(data);
+                console.log("Coookie",data);
     
                 if (!response.ok) {
                     navigate('/');
