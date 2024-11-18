@@ -22,18 +22,27 @@ function Login() {
             });
 
             const data = await response.json();
-
             if (!response.ok) {
                 throw new Error(data.message || 'Error en el inicio de sesión');
             }
-            localStorage.setItem('full_name', data.user.full_name)
+            if (data.user.is_block === false) {
+                localStorage.setItem('full_name', data.user.full_name)
 
-            Swal.fire({
-                title: 'Inicio de sesión exitoso',
-                text: 'Bienvenido/a, ' + data.user.full_name,
-                icon: 'success',
-            });
-            navigate('/dashboard');
+                Swal.fire({
+                    title: 'Inicio de sesión exitoso',
+                    text: 'Bienvenido/a, ' + data.user.full_name,
+                    icon: 'success',
+                });
+                navigate('/dashboard');
+            }
+            else{
+                Swal.fire({
+                    title: 'Usted esta bloqueado',
+                    icon: 'error'
+                })
+            }
+
+            
         } catch (error) {
             setErrorMessage(error.message);
             Swal.fire({
