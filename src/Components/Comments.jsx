@@ -3,7 +3,7 @@ import { FaRegComment } from "react-icons/fa";
 
 const fetchComments = async (postId) => {
     try {
-        const response = await fetch('http://localhost:5000/comments', {
+        const response = await fetch('http://localhost:5003/publicaciones/comments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: postId }), // Envía el ID correcto

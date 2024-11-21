@@ -55,7 +55,7 @@ function QuizAdmin() {
     useEffect(() => {
         const fetchQuizzes = async () => {
             try {
-                const response = await fetch('http://localhost:5000/getQuizzes');
+                const response = await fetch('http://localhost:5004/quizzes');
                 if (!response.ok) {
                     throw new Error("Failed to fetch quizzes");
                 }
@@ -89,7 +89,7 @@ function QuizAdmin() {
             console.log(cuestionarios);
             console.log(nuevoCuestionario);
 
-            const response = await fetch('http://localhost:5000/createQuiz',{
+            const response = await fetch('http://localhost:5004/quizzes',{
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(nuevoCuestionario), 
@@ -120,7 +120,7 @@ function QuizAdmin() {
         
         
             try {
-                const response = await fetch(`http://localhost:5000/deleteQuiz/${id}`, {
+                const response = await fetch(`http://localhost:5004/quizzes/${id}`, {
                     method: "DELETE",
                 });
         

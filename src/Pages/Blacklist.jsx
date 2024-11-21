@@ -9,7 +9,7 @@ function Blacklist() {
     // Función para obtener los usuarios del backend
     const fetchUsuarios = async () => {
         try {
-            const response = await fetch('http://localhost:5000/listUsers');
+            const response = await fetch('http://localhost:5002/users');
             const data = await response.json();
 
             if (data.success) {
@@ -34,7 +34,7 @@ function Blacklist() {
     // Función para actualizar el estado de bloqueo
     const handleToggleBlock = async (id, isBlocked) => {
         try {
-            const response = await fetch('http://localhost:5000/toggleBlock', {
+            const response = await fetch('http://localhost:5002/users/toggleBlock', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

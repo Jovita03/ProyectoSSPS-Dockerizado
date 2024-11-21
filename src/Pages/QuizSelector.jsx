@@ -10,7 +10,7 @@ function QuizSelector() {
     useEffect(() => {
         const fetchCuestionarios = async () => {
             try {
-                const response = await fetch("http://localhost:5000/getQuizzes");
+                const response = await fetch("http://localhost:5004/quizzes");
                 const data = await response.json();
                 setCuestionariosDisponibles(data);
             } catch (error) {

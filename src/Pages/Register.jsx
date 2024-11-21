@@ -16,7 +16,7 @@ function Register() {
     
         try {
             // Verificar si el correo ya existe
-            const response = await fetch(`http://localhost:5000/users/${email}`);
+            const response = await fetch(`http://localhost:5002/users/${email}`);
     
             if (!response.ok) {
                 if (response.status === 404) {
@@ -41,7 +41,7 @@ function Register() {
                 }
             }
     
-            const registerResponse = await fetch('http://localhost:5000/register', {
+            const registerResponse = await fetch('http://localhost:5001/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

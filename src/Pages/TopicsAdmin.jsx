@@ -15,7 +15,7 @@ function TopicsAdmin() {
     useEffect(() => {
         const fetchTipos = async () => {
             try {
-                const response = await fetch('http://localhost:5000/type');
+                const response = await fetch('http://localhost:5005/temas/type');
                 if (!response.ok) {
                     throw new Error('Error al obtener los tipos');
                 }
@@ -39,7 +39,7 @@ function TopicsAdmin() {
 
     const handleAddTopic = async () => {
         try {
-            const response = await fetch('http://localhost:5000/addTopic', {
+            const response = await fetch('http://localhost:5005/temas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
