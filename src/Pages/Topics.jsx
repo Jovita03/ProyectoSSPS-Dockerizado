@@ -9,7 +9,7 @@ function Topics() {
     // Obtener temas desde la API
     const fetchTemas = async () => {
         try {
-            const response = await fetch('http://localhost:5005/temas'); // URL de tu API
+            const response = await fetch('http://topic-service:5005/temas'); // URL de tu API
             if (!response.ok) {
                 throw new Error('Error al obtener los temas');
             }
@@ -35,7 +35,7 @@ function Topics() {
     
     const fetchProtected = async () => {
         try {
-            const response = await fetch('http://localhost:5001/auth/protected', {
+            const response = await fetch('http://auth-service:5001/auth/protected', {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -46,7 +46,7 @@ function Topics() {
             if (!response.ok) {
                 navigate('/');
             } else {
-                setIsAdmin(data.isAdmin)
+                setIsAdmin(data.user.isAdmin)
             }
         } catch (error) {
             console.error("Error al hacer la solicitud protegida:", error);
@@ -62,7 +62,7 @@ function Topics() {
     const handleDelete = async (idTopic) =>{
         console.log("eliminar: ", idTopic);
         try {
-            const response = await fetch('http://localhost:5005/temas/delete', {
+            const response = await fetch('http://topic-service:5005/temas/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: idTopic }),

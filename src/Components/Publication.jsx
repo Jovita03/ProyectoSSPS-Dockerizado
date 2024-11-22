@@ -11,7 +11,7 @@ function Publication({ admin, posts, fetchPosts  }) {
     const handleDelete = async (postId) => {
 
         try{
-            const responseDeleteComments = await fetch('http://localhost:5000/deleteComments',{
+            const responseDeleteComments = await fetch('http://publication-service:5003/publicaciones/deleteComments',{
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: postId }),
@@ -25,7 +25,7 @@ function Publication({ admin, posts, fetchPosts  }) {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/deletePublication', {
+            const response = await fetch('http://publication-service:5003/publicaciones/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: postId }),
@@ -45,7 +45,7 @@ function Publication({ admin, posts, fetchPosts  }) {
     // Función para obtener comentarios por publicación
     const fetchComments = async (postId) => {
         try {
-            const response = await fetch('http://localhost:5003/publicaciones/deleteComments', {
+            const response = await fetch('http://publication-service:5003/publicaciones/deleteComments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: postId }),
@@ -58,11 +58,13 @@ function Publication({ admin, posts, fetchPosts  }) {
 
     // Función para agregar un comentario
     const handleAddComment = async (postId) => {
+        console.log("id add", postId);
+        
         const content = newComments[postId];
         if (!content) return;
     
         try {
-            const response = await fetch('http://localhost:5003/publicaciones/delete', {
+            const response = await fetch('http://publication-service:5003/publicaciones/addComment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

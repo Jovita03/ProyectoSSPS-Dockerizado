@@ -9,7 +9,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchProtected = async () => {
             try {
-                const response = await fetch('http://localhost:5001/auth/protected', {
+                const response = await fetch('http://auth-service:5001/auth/protected', {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -20,7 +20,7 @@ function Dashboard() {
                 if (!response.ok) {
                     navigate('/');
                 } else {
-                    setIsAdmin(data.isAdmin)
+                    setIsAdmin(data.user.isAdmin)
                 }
             } catch (error) {
                 console.error("Error al hacer la solicitud protegida:", error);

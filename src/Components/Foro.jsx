@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
-import Publication from './publication';
+import Publication from './Publication';
 function Foro({ admin }) {
 
     const [newPostTitle, setNewPostTitle] = useState('');
@@ -13,10 +13,10 @@ function Foro({ admin }) {
     // Función para obtener publicaciones
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost:5003/publicaciones');
+            const response = await fetch('http://publication-service:5003/publicaciones');
             const data = await response.json();
             if (Array.isArray(data)) {
-                setPosts([...data]); // Fuerza un nuevo arreglo para asegurar la actualización
+                setPosts([...data]);
             }
         } catch (error) {
             console.error('Error al obtener publicaciones:', error);
@@ -27,13 +27,13 @@ function Foro({ admin }) {
 
     useEffect(() => {
         fetchPosts();
-    }, [location.state]);
+    }, []);
 
     // Función para crear una nueva publicación
     const handleCreatePost = async () => {
         const fullName = localStorage.getItem('full_name');
         try {
-            const response = await fetch('http://localhost:5003/publicaciones', {
+            const response = await fetch('http://publication-service:5003/publicaciones', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

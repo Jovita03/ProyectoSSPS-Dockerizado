@@ -14,18 +14,20 @@ function Navbar() {
     useEffect(() => {
         const fetchProtected = async () => {
             try {
-                const response = await fetch('http://localhost:5001/auth/protected', {
+                const response = await fetch('http://auth-service:5001/auth/protected', {
                     method: 'GET',
                     credentials: 'include',
                 });
                 const data = await response.json();
     
-                console.log(data);
+                console.log("ejecutando fetchProtected")
+                console.log(data.user);
     
+                console.log(data.user.isAdmin)
                 if (!response.ok) {
                     navigate('/');
                 } else {
-                    setIsAdmin(data.isAdmin)
+                    setIsAdmin(data.user.isAdmin)
                 }
             } catch (error) {
                 console.error("Error al hacer la solicitud protegida:", error);
@@ -39,7 +41,7 @@ function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await fetch('http://localhost:5001/auth/logout', {
+            await fetch('http://auth-service:5001/auth/logout', {
                 method: 'GET',
                 credentials: 'include',
             });
