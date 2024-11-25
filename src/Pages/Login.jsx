@@ -12,7 +12,7 @@
             e.preventDefault();
 
             try {
-                const response = await fetch('http://auth-service:5001/auth/login', {
+                const response = await fetch('http://auth-service/auth/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

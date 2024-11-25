@@ -14,7 +14,7 @@ function Navbar() {
     useEffect(() => {
         const fetchProtected = async () => {
             try {
-                const response = await fetch('http://auth-service:5001/auth/protected', {
+                const response = await fetch('http://auth-service/auth/protected', {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -41,7 +41,7 @@ function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await fetch('http://auth-service:5001/auth/logout', {
+            await fetch('http://auth-service/auth/logout', {
                 method: 'GET',
                 credentials: 'include',
             });

@@ -1,19 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend 
+  name: frontend-service  # Nombre del Deployment
 spec:
-  replicas: 4
+  replicas: 2  # Número de réplicas
   selector:
     matchLabels:
-      app: frontend
+      app: frontend-service  # Etiqueta para seleccionar los Pods
   template:
     metadata:
       labels:
-        app: frontend
+        app: frontend-service  # Etiqueta del Pod
     spec:
       containers:
-      - name: frontend
-        image: frontend-image 
+      - name: frontend  # Nombre del contenedor
+        image: eljhovaflores/frontend-service:latest  # Imagen de Docker
         ports:
-        - containerPort: 5173 
+        - containerPort: 80  # Puerto del contenedor
+        envFrom:
+        - secretRef:
+            name: frontend-secret 

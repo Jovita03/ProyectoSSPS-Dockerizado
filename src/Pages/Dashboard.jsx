@@ -9,7 +9,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchProtected = async () => {
             try {
-                const response = await fetch('http://auth-service:5001/auth/protected', {
+                const response = await fetch('http://auth-service/auth/protected', {
                     method: 'GET',
                     credentials: 'include',
                 });

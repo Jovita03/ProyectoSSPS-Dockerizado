@@ -1,32 +1,31 @@
-# Use the official Node.js image as the base image for building
-FROM node:16-alpine AS build
+# Utiliza una imagen base de Node.js con Alpine Linux
+FROM node:18-alpine AS build
 
-# Set the working directory inside the container
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copia los archivos package.json y package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+# Instala las dependencias
 RUN npm install
 
-# Copy the source code
+# Copia el resto del código fuente
 COPY . .
 
-# Build the React app for production
+# Construye la aplicación con Vite
 RUN npm run build
 
-# Use the official Nginx image for serving the built app
-FROM nginx:stable-alpine
+# Utiliza una imagen base de Nginx con Alpine Linux
+FROM nginx:alpine
 
-# Copy the build output to the Nginx container’s html directory
+# Copia la configuración de Nginx (nginx.conf)
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy the main Nginx configuration to the correct directory
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80 to serve the app
+# Expone el puerto 80 para el servidor web
 EXPOSE 80
 
-# Start Nginx
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]

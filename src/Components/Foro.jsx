@@ -13,7 +13,7 @@ function Foro({ admin }) {
     // Función para obtener publicaciones
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://publication-service:5003/publicaciones');
+            const response = await fetch('http://publication-service/publicaciones');
             const data = await response.json();
             if (Array.isArray(data)) {
                 setPosts([...data]);
@@ -33,7 +33,7 @@ function Foro({ admin }) {
     const handleCreatePost = async () => {
         const fullName = localStorage.getItem('full_name');
         try {
-            const response = await fetch('http://publication-service:5003/publicaciones', {
+            const response = await fetch('http://publication-service/publicaciones', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
