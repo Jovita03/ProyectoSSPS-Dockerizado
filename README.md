@@ -107,7 +107,7 @@ Aquí puedes encontrar algunas capturas de pantalla que muestran la interfaz del
 
   ![Captura de pantalla 2024-11-16 111627](https://github.com/user-attachments/assets/44c41d8e-44e7-4714-b35b-943f7b27bc77)
 
-## 📸 Capturas de Cheeky Monkey
+## 📸 Capturas de Cheeky Monkey 🐵
 1. **Prueba de Cheeky Monkey**
   ![image](https://github.com/user-attachments/assets/ee32576f-d3f2-4b15-a25f-98b89d5e4f1d)
 
