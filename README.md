@@ -12,6 +12,9 @@ Este proyecto esta diseñado para que los usuarios puedan responder encuestas y 
 - **React**: Utilizado para el desarrollo de un frontend.
 - **Supabase**: Base de datos.
 - **Docker**: Contenedor para facilitar el despliegue.
+- **Kubernetes**: Para manejar los microservicios.
+- **Cheeky Monkey**: Para realizar pruebas de inyección de fallas.
+
 
 ## 🚀 Despliegue del Proyecto
 
@@ -103,6 +106,17 @@ Aquí puedes encontrar algunas capturas de pantalla que muestran la interfaz del
 4. **Ejemplo de quiz**
 
   ![Captura de pantalla 2024-11-16 111627](https://github.com/user-attachments/assets/44c41d8e-44e7-4714-b35b-943f7b27bc77)
+
+## 📸 Capturas de Cheeky Monkey
+1. **Prueba de Cheeky Monkey**
+  ![image](https://github.com/user-attachments/assets/ee32576f-d3f2-4b15-a25f-98b89d5e4f1d)
+
+2. **Eliminacion de un pod**
+  ![image](https://github.com/user-attachments/assets/645eafdb-b838-4ac9-a560-aa51d63dcaaa)
+
+3. **Recuperacion de Pods**
+  ![image](https://github.com/user-attachments/assets/78938577-35a9-4b3e-8a76-84f93e4fd619)
+
 
 
 ## ⚙️ Uso del Proyecto
